@@ -1,0 +1,4 @@
+Linked: (/home/scott/catkin_ws/devel/.private/localization/lib/localization/ekf_odom_pub, /home/scott/catkin_ws/devel/lib/localization/ekf_odom_pub)
+Linked: (/home/scott/catkin_ws/devel/.private/localization/lib/pkgconfig/localization.pc, /home/scott/catkin_ws/devel/lib/pkgconfig/localization.pc)
+Linked: (/home/scott/catkin_ws/devel/.private/localization/share/localization/cmake/localizationConfig.cmake, /home/scott/catkin_ws/devel/share/localization/cmake/localizationConfig.cmake)
+Linked: (/home/scott/catkin_ws/devel/.private/localization/share/localization/cmake/localizationConfig-version.cmake, /home/scott/catkin_ws/devel/share/localization/cmake/localizationConfig-version.cmake)

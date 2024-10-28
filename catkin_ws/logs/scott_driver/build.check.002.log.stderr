@@ -1,0 +1,10 @@
+[31m[1mCMake Error[0m at /home/scott/catkin_ws/src/scott_driver/CMakeLists.txt:135 (add_executable):
+  add_executable called with incorrect number of arguments
+
+
+[31m[1mCMake Error[0m at /home/scott/catkin_ws/src/scott_driver/CMakeLists.txt:148 (target_link_libraries):
+  Cannot specify link libraries for target "src/random_driver" which is not
+  built by this project.
+
+
+make: *** [cmake_check_build_system] Error 1

@@ -1,0 +1,6 @@
+[31m[1mCMake Error[0m at /home/scott/catkin_ws/src/scott_driver/CMakeLists.txt:147 (target_link_libraries):
+  Cannot specify link libraries for target "random_driver" which is not built
+  by this project.
+
+
+make: *** [cmake_check_build_system] Error 1

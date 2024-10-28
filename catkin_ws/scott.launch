@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+
+<launch>
+<node pkg="tf" type="static_transform_publisher"  name="base_link_to_laser" args="-0.013 0 0.24765 0 0 0 /base_link /laser 10"/>
+<node pkg="tf" type="static_transform_publisher" name="imu_broadcaster" args="0 0 0.006 0 0 0 base_link imu 30" />
+
+<!--  <node pkg="tf" type="static_transform_publisher" name="base_link_broadcaster" args="0 0 0.012 0 0 0 base_footprint base_link 30" /> -->
+<!--
+<arg name="model" default="src/mobile_manipulator_body/urdf/robot_base.urdf"/>
+<arg name="gui" default="false" />
+<node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+<node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+-->
+
+<!-- IMU Data Publisher Using the BNO055 IMU Sensor 
+https://automaticaddison.com/how-to-publish-imu-data-using-ros-and-the-bno055-imu-sensor/
+ Publish: /imu/data -->
+<node ns="imu" name="imu_node" pkg="imu_bno055" type="bno055_i2c_node" respawn="true" respawn_delay="2">
+  <param name="device" type="string" value="/dev/i2c-1"/>
+  <param name="address" type="int" value="40"/> <!-- 0x28 == 40 is the default for BNO055 -->
+  <param name="frame_id" type="string" value="imu"/>
+</node>
+
+<!-- Initial Pose and Goal Publisher 
+https://automaticaddison.com/how-to-create-an-initial-pose-and-goal-publisher-in-ros/
+Publish: /initialpose, /move_base_simple/goal 
+Rviz to be run on tower computer
+-->
+
+<!-- Subscribe: /initialpose, /move_base_simple/goal -->
+<!-- Publish: /initial_2d, /goal_2d -->
+<node pkg="localization_data_pub" type="rviz_click_to_2d" name="rviz_click_to_2d">
+</node>   
+
+<!-- Extended Kalman Filter from robot_pose_ekf Node-->
+<!-- Subscribe: /odom, /imu_data, /vo -->
+<!-- Publish: /robot_pose_ekf/odom_combined 
+<remap from="odom" to="odom_data_quat" />
+<remap from="imu_data" to="imu/data" />  
+<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+    <param name="output_frame" value="odom"/>
+    <param name="base_footprint_frame" value="base_footprint"/>
+    <param name="freq" value="30.0"/>
+    <param name="sensor_timeout" value="1.0"/>
+    <param name="odom_used" value="true"/>
+    <param name="imu_used" value="true"/>
+    <param name="vo_used" value="false"/>
+    <param name="gps_used" value="false"/>
+    <param name="debug" value="false"/>
+    <param name="self_diagnose" value="false"/>
+  </node>
+-->
+
+
+<node 
+pkg="xv_11_laser_driver" 
+type="neato_laser_publisher" 
+name="xv_11_node">
+<param name="port" value="/dev/ttyUSB0"/>
+<param name="firmware_version" value="2"/>
+<param name="frame_id" value="laser"/>
+</node>
+
+<node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+<param name="port" value="/dev/ttyACM0"/>
+<param name="baud" value="115200"/>
+</node>
+
+<!-- Wheel Odometry Publisher -->
+<!-- Subscribe: /right_ticks, /left_ticks, /initial_2d -->
+<!-- Publish: /odom_data_euler, /odom_data_quat -->
+<node pkg="localization" type="ekf_odom_pub" name="ekf_odom_pub">
+</node> 
+
+
+<!--
+static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms
+
+<node pkg="tf" type="static_transform_publisher" 
+name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 /odom /base_link 10"/>
+-->
+
+<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+<param name="scan" value="laser"/>
+<param name="map_udpate_interval" value="1.0"/>
+<param name="maxUrange" value="5.0"/>
+<param name="sigma" value="0.1"/>
+<param name="kernelSize" value="1"/>
+<param name="lstep" value="0.15"/>
+<param name="astep" value="0.15"/>
+<param name="iterations" value="5"/>
+<param name="lsigma" value="0.1"/>
+<param name="ogain" value="3.0"/>
+<param name="lskip" value="1"/>
+<param name="srr" value="0.1"/>
+<param name="srt" value="0.2"/>
+<param name="str" value="0.1"/>
+<param name="stt" value="0.2"/>
+<param name="linearUpdate" value="0.3"/>
+<param name="angularUpdate" value="0.3"/>
+<param name="temporalUpdate" value="0.5"/>
+<param name="resampleThreshold" value="0.5"/>
+<param name="particles" value="50"/>
+<param name="xmin" value="-5.0"/>
+<param name="ymin" value="-5.0"/>
+<param name="xmax" value="5.0"/>
+<param name="ymax" value="5.0"/>
+<param name="delta" value="0.02"/>
+<param name="llsamplerange" value="0.01"/>
+<param name="llsamplestep" value="0.05"/>
+<param name="lasamplerange" value="0.05"/>
+<param name="lasamplestep" value="0.05"/>
+
+</node>
+
+
+
+<!--
+<node 
+pkg="laser_scan_matcher"  type="laser_scan_matcher_node"  name="laser_scan_matcher_node" output="screen">
+<param name="fixed_frame" value = "odom"/>
+<param name="scan" value="laser"/>
+<param name="use_imu" value="true"/>
+<param name="use_odom" value="false"/>
+<param name="use_alpha_beta" value="false"/>
+<param name="max_iterations" value="20"/>
+<param name="kf_dist_linear" value="0.5"/>
+<param name="kf_dist_angular" value="1.0"/>
+</node>
+
+
+<arg name="tf_map_scanmatch_transform_frame_name" default="/scanmatcher_frame"/>
+<arg name="base_frame" default="base_link"/>
+<arg name="odom_frame" default="base_link"/>  
+<arg name="pub_map_odom_transform" default="true"/>
+<arg name="scan_subscriber_queue_size" default="5"/>
+<arg name="scan_topic" default="scan"/>
+<arg name="map_size" default="2048"/>
+-->
+
+</launch>
+
+<!--
+
+<node pkg="rviz" type="rviz" name="rviz" args="-d rviz_cfg.rviz"/>
+
+
+rosrun xv_11_laser_driver neato_laser_publisher _port:=/dev/ttyUSB0 _firmware_version:=2
+
+
+rosrun gmapping slam_gmapping scan:=base_scan
+-->

@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/scott/catkin_ws/devel/.private/xv_11_laser_driver/setup.sh

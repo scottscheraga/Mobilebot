@@ -1,0 +1,4 @@
+Linked: (/home/scott/catkin_ws/devel/.private/rosserial_python/lib/python2.7/dist-packages/rosserial_python/__init__.py, /home/scott/catkin_ws/devel/lib/python2.7/dist-packages/rosserial_python/__init__.py)
+Linked: (/home/scott/catkin_ws/devel/.private/rosserial_python/lib/pkgconfig/rosserial_python.pc, /home/scott/catkin_ws/devel/lib/pkgconfig/rosserial_python.pc)
+Linked: (/home/scott/catkin_ws/devel/.private/rosserial_python/share/rosserial_python/cmake/rosserial_pythonConfig.cmake, /home/scott/catkin_ws/devel/share/rosserial_python/cmake/rosserial_pythonConfig.cmake)
+Linked: (/home/scott/catkin_ws/devel/.private/rosserial_python/share/rosserial_python/cmake/rosserial_pythonConfig-version.cmake, /home/scott/catkin_ws/devel/share/rosserial_python/cmake/rosserial_pythonConfig-version.cmake)

@@ -1,0 +1,4 @@
+Symlinking /home/scott/catkin_ws/devel/lib/imu_bno055/bno055_i2c_node
+Symlinking /home/scott/catkin_ws/devel/lib/pkgconfig/imu_bno055.pc
+Symlinking /home/scott/catkin_ws/devel/share/imu_bno055/cmake/imu_bno055Config-version.cmake
+Symlinking /home/scott/catkin_ws/devel/share/imu_bno055/cmake/imu_bno055Config.cmake

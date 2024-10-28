@@ -1,0 +1,9 @@
+[31m[1mCMake Error[0m at /home/scott/catkin_ws/src/scott_driver/CMakeLists.txt:205:
+  Parse error.  Function missing ending ")".  End of file reached.
+
+
+[36m--[0m Configuring incomplete, errors occurred!
+See also "/home/scott/catkin_ws/build/scott_driver/CMakeFiles/CMakeOutput.log".
+See also "/home/scott/catkin_ws/build/scott_driver/CMakeFiles/CMakeError.log".
+Makefile:530: recipe for target 'cmake_check_build_system' failed
+make: *** [cmake_check_build_system] Error 1

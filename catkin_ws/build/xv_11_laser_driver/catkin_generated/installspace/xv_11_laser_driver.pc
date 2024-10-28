@@ -1,0 +1,8 @@
+prefix=/home/scott/catkin_ws/install
+
+Name: xv_11_laser_driver
+Description: Description of xv_11_laser_driver
+Version: 0.3.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

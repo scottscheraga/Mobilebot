@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/scott/catkin_ws/devel/.private/imu_bno055/setup.sh

@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/scott/catkin_ws/devel/.private/localization_data_pub/setup.sh
